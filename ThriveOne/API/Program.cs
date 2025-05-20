@@ -1,12 +1,13 @@
-using Application.Features.Todos;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Persistence;
 using FluentValidation;
-using Application.Behaviors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
+using Application.Common.Behaviors;
+using Application.Features.Todos.Create;
+using Application.Features.Todos.Read;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -43,12 +44,16 @@ builder.Services.AddApiVersioning(options =>
 
 builder.Services.AddMediatR(cfg =>
 {
+    // Todo services \\
     cfg.RegisterServicesFromAssemblyContaining<CreateTodoHandler>();
+    cfg.RegisterServicesFromAssemblyContaining<ReadTodoHandler>();
 });
 
 builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 
+// Todo validators \\
 builder.Services.AddValidatorsFromAssemblyContaining<CreateTodoValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<ReadTodoValidator>();
 
 var app = builder.Build();
 

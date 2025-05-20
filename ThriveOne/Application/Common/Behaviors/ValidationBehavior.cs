@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Behaviors
+namespace Application.Common.Behaviors
 {
     public class ValidationBehavior<TRequest, TResponse>(IEnumerable<IValidator<TRequest>> validators)
         : IPipelineBehavior<TRequest, TResponse>

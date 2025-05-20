@@ -2,7 +2,7 @@
 using Persistence;
 using Persistence.Entities;
 
-namespace Application.Features.Todos;
+namespace Application.Features.Todos.Create;
 
 public class CreateTodoHandler(ApplicationDbContext context) : IRequestHandler<CreateTodo, Guid>
 {

@@ -13,8 +13,16 @@
     <Folder Include="Common\Interfaces\" />
     <Folder Include="Common\Settings\" />
     <Folder Include="Features\Debts\" />
-    <Folder Include="Features\Todos\" />
     <Folder Include="Features\WorkTasks\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="12.0.0" />
+    <PackageReference Include="MediatR" Version="12.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Persistence\Persistence.csproj" />
   </ItemGroup>
 
 </Project>

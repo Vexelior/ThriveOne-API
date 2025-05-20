@@ -7,12 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Common\" />
-    <Folder Include="Domain\" />
+    <Folder Include="Common\Behaviors\" />
+    <Folder Include="Common\Exceptions\" />
+    <Folder Include="Common\Extensions\" />
+    <Folder Include="Common\Interfaces\" />
+    <Folder Include="Common\Settings\" />
     <Folder Include="Features\Debts\" />
     <Folder Include="Features\Todos\" />
     <Folder Include="Features\WorkTasks\" />
-    <Folder Include="Infrastructure\" />
   </ItemGroup>
 
 </Project>

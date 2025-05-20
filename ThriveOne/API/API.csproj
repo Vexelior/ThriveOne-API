@@ -23,16 +23,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Common\" />
-    <Folder Include="Contracts\Debts\" />
-    <Folder Include="Contracts\Todos\" />
-    <Folder Include="Contracts\WorkTasks\" />
     <Folder Include="Controllers\" />
-    <Folder Include="Domain\" />
-    <Folder Include="Features\Debts\" />
-    <Folder Include="Features\Todos\" />
-    <Folder Include="Features\WorkTasks\" />
-    <Folder Include="Infrastructure\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Application\Application.csproj" />
+    <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
+    <ProjectReference Include="..\Persistence\Persistence.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,4 @@
-﻿namespace API.Entities.Debt;
+﻿namespace Persistence.Entities.Debt;
 
 public class PreviousAmount
 {

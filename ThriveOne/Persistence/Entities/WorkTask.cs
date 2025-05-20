@@ -1,4 +1,4 @@
-﻿namespace API.Entities;
+﻿namespace Persistence.Entities;
 
 public class WorkTask
 {

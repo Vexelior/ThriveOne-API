@@ -1,9 +1,9 @@
-﻿using API.Entities;
-using API.Entities.Debt;
+﻿using Persistence.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Persistence.Entities.Debt;
 
-namespace API.Data;
+namespace Persistence;
 
 public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : IdentityDbContext(options)
 {

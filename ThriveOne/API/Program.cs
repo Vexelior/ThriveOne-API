@@ -46,8 +46,9 @@ builder.Services.AddMediatR(cfg =>
     cfg.RegisterServicesFromAssemblyContaining<CreateTodoHandler>();
 });
 
-builder.Services.AddValidatorsFromAssemblyContaining<CreateTodoValidator>();
 builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+
+builder.Services.AddValidatorsFromAssemblyContaining<CreateTodoValidator>();
 
 var app = builder.Build();
 

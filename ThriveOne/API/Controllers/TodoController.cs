@@ -10,12 +10,37 @@ namespace API.Controllers;
 [ApiController]
 public class TodoController(IMediator mediator) : ControllerBase
 {
+    [HttpGet]
+    public async Task<IActionResult> GetAll()
+    {
+        try
+        {
+            var result = await mediator.Send(new ReadTodos());
+            if (result == null)
+            {
+                return NotFound("No todos found.");
+            }
+            return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
+
     [HttpGet("{id:guid}")]
     public async Task<IActionResult> GetById(Guid id)
     {
         try
         {
             var result = await mediator.Send(new ReadTodo(id));
+
+            if (result == null)
+            {
+                return NotFound($"Todo with ID {id} not found.");
+            }
+
             return Ok(result);
         }
         catch (Exception ex)

@@ -4,7 +4,7 @@ using Persistence.Entities;
 
 namespace Application.Features.Todos.Read;
 
-public class ReadTodoHandler(ApplicationDbContext context) : IRequestHandler<ReadTodo, Todo?>
+public class ReadTodoHandler(ApplicationDbContext context) : IRequestHandler<ReadTodo, Todo>
 {
     public async Task<Todo?> Handle(ReadTodo request, CancellationToken cancellationToken)
     {

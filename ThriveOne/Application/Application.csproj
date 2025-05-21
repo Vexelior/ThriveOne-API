@@ -13,7 +13,6 @@
     <Folder Include="Common\Settings\" />
     <Folder Include="Features\Debts\" />
     <Folder Include="Features\Todos\Delete\" />
-    <Folder Include="Features\Todos\Update\" />
     <Folder Include="Features\WorkTasks\" />
   </ItemGroup>
 

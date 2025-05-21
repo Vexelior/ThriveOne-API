@@ -1,5 +1,6 @@
 ﻿using Application.Features.Todos.Create;
 using Application.Features.Todos.Read;
+using Application.Features.Todos.Update;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -61,6 +62,28 @@ public class TodoController(IMediator mediator) : ControllerBase
                 return BadRequest("Failed to create todo.");
             }
 
+            return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
+    [HttpPut("{id:guid}")]
+    public async Task<IActionResult> Update(Guid id, [FromBody] UpdateTodo command)
+    {
+        try
+        {
+            if (id != command.Id)
+            {
+                return BadRequest("Todo Id mismatch.");
+            }
+            var result = await mediator.Send(command);
+            if (result == null)
+            {
+                return NotFound($"Todo with ID {id} not found.");
+            }
             return Ok(result);
         }
         catch (Exception ex)

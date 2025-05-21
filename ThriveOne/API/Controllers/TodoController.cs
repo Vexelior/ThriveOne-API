@@ -1,4 +1,5 @@
 ﻿using Application.Features.Todos.Create;
+using Application.Features.Todos.Delete;
 using Application.Features.Todos.Read;
 using Application.Features.Todos.Update;
 using MediatR;
@@ -21,6 +22,7 @@ public class TodoController(IMediator mediator) : ControllerBase
             {
                 return NotFound("No todos found.");
             }
+
             return Ok(result);
         }
         catch (Exception ex)
@@ -79,11 +81,32 @@ public class TodoController(IMediator mediator) : ControllerBase
             {
                 return BadRequest("Todo Id mismatch.");
             }
+
             var result = await mediator.Send(command);
             if (result == null)
             {
                 return NotFound($"Todo with ID {id} not found.");
             }
+
+            return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
+    [HttpDelete("{id:guid}")]
+    public async Task<IActionResult> Delete(Guid id)
+    {
+        try
+        {
+            var result = await mediator.Send(new DeleteTodo(id));
+            if (result == null)
+            {
+                return NotFound($"Todo with ID {id} not found.");
+            }
+
             return Ok(result);
         }
         catch (Exception ex)

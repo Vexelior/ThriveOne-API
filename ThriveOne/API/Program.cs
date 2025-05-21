@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Versioning;
 using Application.Common.Behaviors;
 using Application.Features.Todos.Create;
 using Application.Features.Todos.Read;
+using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -42,18 +43,8 @@ builder.Services.AddApiVersioning(options =>
     options.ApiVersionReader = new UrlSegmentApiVersionReader();
 });
 
-builder.Services.AddMediatR(cfg =>
-{
-    // Todo services \\
-    cfg.RegisterServicesFromAssemblyContaining<CreateTodoHandler>();
-    cfg.RegisterServicesFromAssemblyContaining<ReadTodoHandler>();
-});
-
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(ReadTodoHandler).Assembly));
 builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
-
-// Todo validators \\
-builder.Services.AddValidatorsFromAssemblyContaining<CreateTodoValidator>();
-builder.Services.AddValidatorsFromAssemblyContaining<ReadTodoValidator>();
 
 var app = builder.Build();
 

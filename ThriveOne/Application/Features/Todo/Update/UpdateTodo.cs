@@ -1,9 +1,8 @@
 ﻿using MediatR;
-using Persistence.Entities;
 
-namespace Application.Features.Todos.Update;
+namespace Application.Features.Todo.Update;
 
-public class UpdateTodo(Guid id, string title, string description, DateTime? created, DateTime? completed, DateTime? due, bool isCompleted) : IRequest<Todo>
+public class UpdateTodo(Guid id, string title, string description, DateTime? created, DateTime? completed, DateTime? due, bool isCompleted) : IRequest<Persistence.Entities.Todo.Todo>
 {
     public Guid Id { get; set; } = id;
     public string Title { get; set; } = title;

@@ -1,13 +1,11 @@
-﻿using Application.Features.Todos.Read;
-using MediatR;
+﻿using MediatR;
 using Persistence;
-using Persistence.Entities;
 
-namespace Application.Features.Todos.Update;
+namespace Application.Features.Todo.Update;
 
-public class UpdateTodoHandler(ApplicationDbContext context) : IRequestHandler<UpdateTodo, Todo>
+public class UpdateTodoHandler(ApplicationDbContext context) : IRequestHandler<UpdateTodo, Persistence.Entities.Todo.Todo>
 {
-    public async Task<Todo?> Handle(UpdateTodo request, CancellationToken cancellationToken)
+    public async Task<Persistence.Entities.Todo.Todo?> Handle(UpdateTodo request, CancellationToken cancellationToken)
     {
         var todo = await context.Todos.FindAsync([request.Id], cancellationToken);
         if (todo == null)

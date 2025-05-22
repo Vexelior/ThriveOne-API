@@ -1,4 +1,4 @@
-﻿namespace Persistence.Entities;
+﻿namespace Persistence.Entities.Todo;
 
 public class Todo
 {

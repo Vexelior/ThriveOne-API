@@ -1,11 +1,11 @@
-﻿using Application.Features.Todos.Create;
-using Application.Features.Todos.Delete;
-using Application.Features.Todos.Read;
-using Application.Features.Todos.Update;
+﻿using Application.Features.Todo.Create;
+using Application.Features.Todo.Delete;
+using Application.Features.Todo.Read;
+using Application.Features.Todo.Update;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace API.Controllers;
+namespace API.Controllers.Todo;
 
 [Route("api/v{version:apiVersion}/[controller]")]
 [ApiVersion("1.0")]

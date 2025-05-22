@@ -11,8 +11,10 @@
     <Folder Include="Common\Extensions\" />
     <Folder Include="Common\Interfaces\" />
     <Folder Include="Common\Settings\" />
-    <Folder Include="Features\Debts\" />
-    <Folder Include="Features\WorkTasks\" />
+    <Folder Include="Features\Debt\Delete\Debt\" />
+    <Folder Include="Features\Debt\Read\Debt\" />
+    <Folder Include="Features\Debt\Update\Debt\" />
+    <Folder Include="Features\WorkTask\" />
   </ItemGroup>
 
   <ItemGroup>

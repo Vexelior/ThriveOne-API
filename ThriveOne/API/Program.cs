@@ -6,8 +6,7 @@ using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Application.Common.Behaviors;
-using Application.Features.Todos.Create;
-using Application.Features.Todos.Read;
+using Application.Features.Todo.Read;
 using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);

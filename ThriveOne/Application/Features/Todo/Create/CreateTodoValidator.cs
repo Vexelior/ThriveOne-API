@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace Application.Features.Todos.Create;
+namespace Application.Features.Todo.Create;
 
 public class CreateTodoValidator : AbstractValidator<CreateTodo>
 {

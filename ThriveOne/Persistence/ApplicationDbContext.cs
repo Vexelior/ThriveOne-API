@@ -1,7 +1,8 @@
-﻿using Persistence.Entities;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Entities.Debt;
+using Persistence.Entities.Todo;
+using Persistence.Entities.WorkTask;
 
 namespace Persistence;
 

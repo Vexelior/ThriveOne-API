@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace Application.Features.Todos.Update;
+namespace Application.Features.Todo.Update;
 
 public class UpdateTodoValidator : AbstractValidator<UpdateTodo>
 {

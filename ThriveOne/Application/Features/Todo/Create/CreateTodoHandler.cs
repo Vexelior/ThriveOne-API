@@ -1,14 +1,13 @@
 ﻿using MediatR;
 using Persistence;
-using Persistence.Entities;
 
-namespace Application.Features.Todos.Create;
+namespace Application.Features.Todo.Create;
 
 public class CreateTodoHandler(ApplicationDbContext context) : IRequestHandler<CreateTodo, Guid>
 {
     public async Task<Guid> Handle(CreateTodo request, CancellationToken cancellationToken)
     {
-        var todo = new Todo
+        var todo = new Persistence.Entities.Todo.Todo
         {
             Id = Guid.NewGuid(),
             Title = request.Title,

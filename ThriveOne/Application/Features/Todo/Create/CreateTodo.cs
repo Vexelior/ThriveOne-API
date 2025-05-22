@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace Application.Features.Todos.Create;
+namespace Application.Features.Todo.Create;
 
 public class CreateTodo : IRequest<Guid>
 {

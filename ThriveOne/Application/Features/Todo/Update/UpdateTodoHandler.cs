@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using FluentValidation.Results;
+using MediatR;
 using Persistence;
 
 namespace Application.Features.Todo.Update;
@@ -7,6 +8,14 @@ public class UpdateTodoHandler(ApplicationDbContext context) : IRequestHandler<U
 {
     public async Task<Persistence.Entities.Todo.Todo?> Handle(UpdateTodo request, CancellationToken cancellationToken)
     {
+        UpdateTodoValidator validator = new UpdateTodoValidator();
+        ValidationResult validationResult = await validator.ValidateAsync(request, cancellationToken);
+
+        if (!validationResult.IsValid)
+        {
+            throw new FluentValidation.ValidationException(validationResult.Errors);
+        }
+
         var todo = await context.Todos.FindAsync([request.Id], cancellationToken);
         if (todo == null)
         {

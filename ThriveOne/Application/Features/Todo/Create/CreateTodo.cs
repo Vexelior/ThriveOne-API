@@ -2,7 +2,7 @@
 
 namespace Application.Features.Todo.Create;
 
-public class CreateTodo : IRequest<Guid>
+public class CreateTodo : IRequest<Persistence.Entities.Todo.Todo>
 {
     public string Title { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;

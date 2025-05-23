@@ -5,9 +5,9 @@ using Persistence;
 
 namespace Application.Features.Todo.Create;
 
-public class CreateTodoHandler(ApplicationDbContext context) : IRequestHandler<CreateTodo, Guid>
+public class CreateTodoHandler(ApplicationDbContext context) : IRequestHandler<CreateTodo, Persistence.Entities.Todo.Todo>
 {
-    public async Task<Guid> Handle(CreateTodo request, CancellationToken cancellationToken)
+    public async Task<Persistence.Entities.Todo.Todo> Handle(CreateTodo request, CancellationToken cancellationToken)
     {
         CreateTodoValidator validator = new CreateTodoValidator();
         ValidationResult validationResult = await validator.ValidateAsync(request, cancellationToken);
@@ -31,6 +31,6 @@ public class CreateTodoHandler(ApplicationDbContext context) : IRequestHandler<C
         context.Todos.Add(todo);
         await context.SaveChangesAsync(cancellationToken);
 
-        return todo.Id;
+        return todo;
     }
 }

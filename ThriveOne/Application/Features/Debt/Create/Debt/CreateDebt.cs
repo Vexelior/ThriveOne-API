@@ -2,7 +2,7 @@
 
 namespace Application.Features.Debt.Create.Debt;
 
-public class CreateDebt : IRequest<Guid>
+public class CreateDebt : IRequest<Persistence.Entities.Debt.Debt>
 {
     public string Creditor { get; set; }
     public double Amount { get; set; }

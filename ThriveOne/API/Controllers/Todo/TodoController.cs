@@ -59,7 +59,7 @@ public class TodoController(IMediator mediator) : ControllerBase
         {
             var result = await mediator.Send(command);
 
-            if (result == Guid.Empty)
+            if (result == null)
             {
                 return BadRequest("Failed to create todo.");
             }

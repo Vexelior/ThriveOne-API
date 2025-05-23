@@ -4,9 +4,9 @@ using Persistence;
 
 namespace Application.Features.Debt.Create.Debt;
 
-public class CreateDebtHandler(ApplicationDbContext context) : IRequestHandler<CreateDebt, Guid>
+public class CreateDebtHandler(ApplicationDbContext context) : IRequestHandler<CreateDebt, Persistence.Entities.Debt.Debt>
 {
-    public async Task<Guid> Handle(CreateDebt request, CancellationToken cancellationToken)
+    public async Task<Persistence.Entities.Debt.Debt> Handle(CreateDebt request, CancellationToken cancellationToken)
     {
         var debt = new Persistence.Entities.Debt.Debt
         {
@@ -30,6 +30,6 @@ public class CreateDebtHandler(ApplicationDbContext context) : IRequestHandler<C
         };
         context.Debts.Add(debt);
         await context.SaveChangesAsync(cancellationToken);
-        return debt.Id;
+        return debt;
     }
 }

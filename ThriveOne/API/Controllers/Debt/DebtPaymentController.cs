@@ -1,6 +1,5 @@
 ﻿using Application.Features.Debt.Create.Payment;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers.Debt;

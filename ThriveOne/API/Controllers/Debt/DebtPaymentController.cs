@@ -1,4 +1,5 @@
 ﻿using Application.Features.Debt.Create.Payment;
+using Application.Features.Debt.Delete.Payment;
 using Application.Features.Debt.Read.Payment;
 using Application.Features.Debt.Update.Payment;
 using MediatR;
@@ -78,6 +79,24 @@ public class DebtPaymentController(IMediator mediator) : ControllerBase
             if (result == null)
             {
                 return NotFound("Failed to update debt payment.");
+            }
+            return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
+    [HttpDelete("{id:guid}")]
+    public async Task<IActionResult> Delete(Guid id)
+    {
+        try
+        {
+            var result = await mediator.Send(new DeleteDebtPayment(id));
+            if (result == null)
+            {
+                return NotFound("Failed to delete debt payment.");
             }
             return Ok(result);
         }

@@ -11,13 +11,6 @@
     <Folder Include="Common\Extensions\" />
     <Folder Include="Common\Interfaces\" />
     <Folder Include="Common\Settings\" />
-    <Folder Include="Features\Debt\Delete\Debt\" />
-    <Folder Include="Features\Debt\Delete\History\" />
-    <Folder Include="Features\Debt\Delete\Image\" />
-    <Folder Include="Features\Debt\Delete\InterestCharge\" />
-    <Folder Include="Features\Debt\Delete\Payment\" />
-    <Folder Include="Features\Debt\Delete\PreviousAmount\" />
-    <Folder Include="Features\Debt\Delete\PreviousPercentage\" />
     <Folder Include="Features\WorkTask\Create\" />
     <Folder Include="Features\WorkTask\Delete\" />
     <Folder Include="Features\WorkTask\Read\" />

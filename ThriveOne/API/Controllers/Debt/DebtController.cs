@@ -1,4 +1,5 @@
 ﻿using Application.Features.Debt.Create.Debt;
+using Application.Features.Debt.Delete.Debt;
 using Application.Features.Debt.Read.Debt;
 using Application.Features.Debt.Update.Debt;
 using MediatR;
@@ -77,6 +78,24 @@ public class DebtController(IMediator mediator) : ControllerBase
                 return BadRequest("Debt ID mismatch.");
             }
             var result = await mediator.Send(command);
+            if (result == null)
+            {
+                return NotFound($"Debt with ID {id} not found.");
+            }
+            return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
+    [HttpDelete("{id:guid}")]
+    public async Task<IActionResult> Delete(Guid id)
+    {
+        try
+        {
+            var result = await mediator.Send(new DeleteDebt(id));
             if (result == null)
             {
                 return NotFound($"Debt with ID {id} not found.");

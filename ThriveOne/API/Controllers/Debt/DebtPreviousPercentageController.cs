@@ -1,4 +1,5 @@
 ﻿using Application.Features.Debt.Create.PreviousPercentage;
+using Application.Features.Debt.Delete.PreviousPercentage;
 using Application.Features.Debt.Read.PreviousPercentage;
 using Application.Features.Debt.Update.PreviousPercentage;
 using MediatR;
@@ -80,6 +81,25 @@ public class DebtPreviousPercentageController(IMediator mediator) : ControllerBa
             if (result == null)
             {
                 return NotFound("Failed to update debt previous percentage.");
+            }
+            return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
+    [HttpDelete("{id:guid}")]
+    public async Task<IActionResult> Delete(Guid id)
+    {
+        try
+        {
+            var command = new DeleteDebtPreviousPercentage(id);
+            var result = await mediator.Send(command);
+            if (result == null)
+            {
+                return NotFound("Failed to delete debt previous percentage.");
             }
             return Ok(result);
         }

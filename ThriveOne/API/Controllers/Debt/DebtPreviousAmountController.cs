@@ -1,4 +1,5 @@
 ﻿using Application.Features.Debt.Create.PreviousAmount;
+using Application.Features.Debt.Delete.PreviousAmount;
 using Application.Features.Debt.Read.PreviousAmount;
 using Application.Features.Debt.Update.PreviousAmount;
 using MediatR;
@@ -79,6 +80,24 @@ public class DebtPreviousAmountController(IMediator mediator) : ControllerBase
             if (result == null)
             {
                 return NotFound("Failed to update debt previous amount.");
+            }
+            return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
+    [HttpDelete("{id:guid}")]
+    public async Task<IActionResult> Delete(Guid id)
+    {
+        try
+        {
+            var result = await mediator.Send(new DeleteDebtPreviousAmount(id));
+            if (result == null)
+            {
+                return NotFound("Failed to delete debt previous amount.");
             }
             return Ok(result);
         }

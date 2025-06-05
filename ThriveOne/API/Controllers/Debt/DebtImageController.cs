@@ -1,4 +1,5 @@
 ﻿using Application.Features.Debt.Create.Image;
+using Application.Features.Debt.Delete.Image;
 using Application.Features.Debt.Update.Image;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -74,6 +75,24 @@ public class DebtImageController(IMediator mediator) : ControllerBase
         try
         {
             var result = await mediator.Send(command);
+            if (result == null)
+            {
+                return NotFound($"Debt image with ID {id} not found.");
+            }
+            return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
+    [HttpDelete("{id:guid}")]
+    public async Task<IActionResult> Delete(Guid id)
+    {
+        try
+        {
+            var result = await mediator.Send(new DeleteDebtImage(id));
             if (result == null)
             {
                 return NotFound($"Debt image with ID {id} not found.");

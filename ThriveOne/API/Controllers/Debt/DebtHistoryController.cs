@@ -1,4 +1,5 @@
 ﻿using Application.Features.Debt.Create.History;
+using Application.Features.Debt.Delete.History;
 using Application.Features.Debt.Update.History;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -77,6 +78,24 @@ public class DebtHistoryController(IMediator mediator) : ControllerBase
             if (result == null)
             {
                 return NotFound("Failed to update debt history.");
+            }
+            return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
+    [HttpDelete("{id:guid}")]
+    public async Task<IActionResult> Delete(Guid id)
+    {
+        try
+        {
+            var result = await mediator.Send(new DeleteDebtHistory(id));
+            if (result == null)
+            {
+                return NotFound("Failed to delete debt history.");
             }
             return Ok(result);
         }

@@ -1,5 +1,4 @@
-﻿using Application.Features.Debt.Read.Debt;
-using MediatR;
+﻿using MediatR;
 using Persistence;
 namespace Application.Features.Debt.Update.Debt;
 

@@ -11,10 +11,6 @@
     <Folder Include="Common\Extensions\" />
     <Folder Include="Common\Interfaces\" />
     <Folder Include="Common\Settings\" />
-    <Folder Include="Features\WorkTask\Create\" />
-    <Folder Include="Features\WorkTask\Delete\" />
-    <Folder Include="Features\WorkTask\Read\" />
-    <Folder Include="Features\WorkTask\Update\" />
   </ItemGroup>
 
   <ItemGroup>

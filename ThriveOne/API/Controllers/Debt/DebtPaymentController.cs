@@ -1,5 +1,6 @@
 ﻿using Application.Features.Debt.Create.Payment;
 using Application.Features.Debt.Read.Payment;
+using Application.Features.Debt.Update.Payment;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -55,6 +56,28 @@ public class DebtPaymentController(IMediator mediator) : ControllerBase
             if (result == null)
             {
                 return NotFound("Failed to create debt payment.");
+            }
+            return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
+    [HttpPut("{id:guid}")]
+    public async Task<IActionResult> Update(Guid id, [FromBody] UpdateDebtPayment command)
+    {
+        try
+        {
+            if (id != command.Id)
+            {
+                return BadRequest("ID in the URL does not match the ID in the request body.");
+            }
+            var result = await mediator.Send(command);
+            if (result == null)
+            {
+                return NotFound("Failed to update debt payment.");
             }
             return Ok(result);
         }

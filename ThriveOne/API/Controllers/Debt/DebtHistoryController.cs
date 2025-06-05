@@ -1,4 +1,5 @@
 ﻿using Application.Features.Debt.Create.History;
+using Application.Features.Debt.Update.History;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,7 +18,7 @@ public class DebtHistoryController(IMediator mediator) : ControllerBase
             var result = await mediator.Send(new Application.Features.Debt.Read.History.ReadDebtHistories());
             if (result == null || !result.Any())
             {
-                return NotFound("No debt history found.");
+                return NotFound("Debt history not found.");
             }
             return Ok(result);
         }
@@ -53,7 +54,29 @@ public class DebtHistoryController(IMediator mediator) : ControllerBase
             var result = await mediator.Send(command);
             if (result == null)
             {
-                return NotFound("Failed to create debt image.");
+                return NotFound("Failed to create debt history.");
+            }
+            return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
+    [HttpPut("{id:guid}")]
+    public async Task<IActionResult> Update(Guid id, [FromBody] UpdateDebtHistory command)
+    {
+        if (id != command.Id)
+        {
+            return BadRequest("Debt history Id mismatch.");
+        }
+        try
+        {
+            var result = await mediator.Send(command);
+            if (result == null)
+            {
+                return NotFound("Failed to update debt history.");
             }
             return Ok(result);
         }

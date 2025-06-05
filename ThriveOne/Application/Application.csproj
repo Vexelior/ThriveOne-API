@@ -18,13 +18,6 @@
     <Folder Include="Features\Debt\Delete\Payment\" />
     <Folder Include="Features\Debt\Delete\PreviousAmount\" />
     <Folder Include="Features\Debt\Delete\PreviousPercentage\" />
-    <Folder Include="Features\Debt\Update\Debt\" />
-    <Folder Include="Features\Debt\Update\History\" />
-    <Folder Include="Features\Debt\Update\Image\" />
-    <Folder Include="Features\Debt\Update\InterestCharge\" />
-    <Folder Include="Features\Debt\Update\Payment\" />
-    <Folder Include="Features\Debt\Update\PreviousAmount\" />
-    <Folder Include="Features\Debt\Update\PreviousPercentage\" />
     <Folder Include="Features\WorkTask\Create\" />
     <Folder Include="Features\WorkTask\Delete\" />
     <Folder Include="Features\WorkTask\Read\" />

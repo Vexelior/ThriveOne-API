@@ -1,5 +1,6 @@
 ﻿using Application.Features.Debt.Create.InterestCharge;
 using Application.Features.Debt.Read.InterestCharge;
+using Application.Features.Debt.Update.InterestCharge;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -58,6 +59,28 @@ public class DebtInterestChargeController(IMediator mediator) : ControllerBase
                 return NotFound("Failed to create debt.");
             }
 
+            return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
+    [HttpPut("{id:guid}")]
+    public async Task<IActionResult> Update(Guid id, [FromBody] UpdateDebtInterestCharge command)
+    {
+        try
+        {
+            if (id != command.Id)
+            {
+                return BadRequest("ID in the URL does not match ID in the body.");
+            }
+            var result = await mediator.Send(command);
+            if (result == null)
+            {
+                return NotFound($"Debt interest charge with ID {id} not found.");
+            }
             return Ok(result);
         }
         catch (Exception ex)

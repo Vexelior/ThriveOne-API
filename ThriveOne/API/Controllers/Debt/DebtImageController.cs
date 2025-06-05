@@ -1,4 +1,5 @@
 ﻿using Application.Features.Debt.Create.Image;
+using Application.Features.Debt.Update.Image;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -54,6 +55,28 @@ public class DebtImageController(IMediator mediator) : ControllerBase
             if (result == null)
             {
                 return NotFound("Failed to create debt image.");
+            }
+            return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
+    [HttpPut("{id:guid}")]
+    public async Task<IActionResult> Update(Guid id, [FromBody] UpdateDebtImage command)
+    {
+        if (id != command.Id)
+        {
+            return BadRequest("ID in the URL does not match ID in the request body.");
+        }
+        try
+        {
+            var result = await mediator.Send(command);
+            if (result == null)
+            {
+                return NotFound($"Debt image with ID {id} not found.");
             }
             return Ok(result);
         }

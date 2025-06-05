@@ -1,5 +1,6 @@
 ﻿using Application.Features.Debt.Create.PreviousAmount;
 using Application.Features.Debt.Read.PreviousAmount;
+using Application.Features.Debt.Update.PreviousAmount;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -57,6 +58,28 @@ public class DebtPreviousAmountController(IMediator mediator) : ControllerBase
                 return NotFound("Failed to create debt.");
             }
 
+            return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
+    [HttpPut("{id:guid}")]
+    public async Task<IActionResult> Update(Guid id, [FromBody] UpdateDebtPreviousAmount command)
+    {
+        try
+        {
+            if (id != command.Id)
+            {
+                return BadRequest("ID in the URL does not match the ID in the request body.");
+            }
+            var result = await mediator.Send(command);
+            if (result == null)
+            {
+                return NotFound("Failed to update debt previous amount.");
+            }
             return Ok(result);
         }
         catch (Exception ex)

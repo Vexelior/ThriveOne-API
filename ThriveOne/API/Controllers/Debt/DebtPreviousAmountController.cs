@@ -17,10 +17,6 @@ public class DebtPreviousAmountController(IMediator mediator) : ControllerBase
         try
         {
             var result = await mediator.Send(new ReadDebtPreviousAmounts());
-            if (result == null || !result.Any())
-            {
-                return NotFound("No debt payments found.");
-            }
             return Ok(result);
         }
         catch (Exception ex)
@@ -35,10 +31,6 @@ public class DebtPreviousAmountController(IMediator mediator) : ControllerBase
         try
         {
             var result = await mediator.Send(new ReadDebtPreviousAmount(id));
-            if (result == null)
-            {
-                return NotFound("No debt payments found.");
-            }
             return Ok(result);
         }
         catch (Exception ex)
@@ -53,12 +45,6 @@ public class DebtPreviousAmountController(IMediator mediator) : ControllerBase
         try
         {
             var result = await mediator.Send(command);
-
-            if (result == null)
-            {
-                return NotFound("Failed to create debt.");
-            }
-
             return Ok(result);
         }
         catch (Exception ex)
@@ -77,10 +63,6 @@ public class DebtPreviousAmountController(IMediator mediator) : ControllerBase
                 return BadRequest("ID in the URL does not match the ID in the request body.");
             }
             var result = await mediator.Send(command);
-            if (result == null)
-            {
-                return NotFound("Failed to update debt previous amount.");
-            }
             return Ok(result);
         }
         catch (Exception ex)
@@ -95,10 +77,6 @@ public class DebtPreviousAmountController(IMediator mediator) : ControllerBase
         try
         {
             var result = await mediator.Send(new DeleteDebtPreviousAmount(id));
-            if (result == null)
-            {
-                return NotFound("Failed to delete debt previous amount.");
-            }
             return Ok(result);
         }
         catch (Exception ex)

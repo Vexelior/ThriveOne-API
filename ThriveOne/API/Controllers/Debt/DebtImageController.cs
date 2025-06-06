@@ -1,6 +1,7 @@
 ﻿using Application.Features.Debt.Create.Image;
 using Application.Features.Debt.Delete.Image;
 using Application.Features.Debt.Update.Image;
+using Application.Features.Debt.Read.Image;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,11 +17,7 @@ public class DebtImageController(IMediator mediator) : ControllerBase
     {
         try
         {
-            var result = await mediator.Send(new Application.Features.Debt.Read.Image.ReadDebtImages());
-            if (result == null || !result.Any())
-            {
-                return NotFound("No debt images found.");
-            }
+            var result = await mediator.Send(new ReadDebtImages());
             return Ok(result);
         }
         catch (Exception ex)
@@ -34,11 +31,22 @@ public class DebtImageController(IMediator mediator) : ControllerBase
     {
         try
         {
-            var result = await mediator.Send(new Application.Features.Debt.Read.Image.ReadDebtImage(id));
-            if (result == null)
-            {
-                return NotFound($"Debt image with ID {id} not found.");
-            }
+            var result = await mediator.Send(new ReadDebtImage(id));
+            return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
+    [HttpGet]
+    [Route("GetByName")]
+    public async Task<IActionResult> GetByName(string name)
+    {
+        try
+        {
+            var result = await mediator.Send(new ReadDebtImageByName(name));
             return Ok(result);
         }
         catch (Exception ex)
@@ -53,10 +61,6 @@ public class DebtImageController(IMediator mediator) : ControllerBase
         try
         {
             var result = await mediator.Send(command);
-            if (result == null)
-            {
-                return NotFound("Failed to create debt image.");
-            }
             return Ok(result);
         }
         catch (Exception ex)
@@ -75,10 +79,6 @@ public class DebtImageController(IMediator mediator) : ControllerBase
         try
         {
             var result = await mediator.Send(command);
-            if (result == null)
-            {
-                return NotFound($"Debt image with ID {id} not found.");
-            }
             return Ok(result);
         }
         catch (Exception ex)
@@ -93,10 +93,6 @@ public class DebtImageController(IMediator mediator) : ControllerBase
         try
         {
             var result = await mediator.Send(new DeleteDebtImage(id));
-            if (result == null)
-            {
-                return NotFound($"Debt image with ID {id} not found.");
-            }
             return Ok(result);
         }
         catch (Exception ex)

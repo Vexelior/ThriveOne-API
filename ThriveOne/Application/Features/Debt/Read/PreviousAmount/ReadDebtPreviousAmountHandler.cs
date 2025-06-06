@@ -1,13 +1,14 @@
 ﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Persistence;
 
 namespace Application.Features.Debt.Read.PreviousAmount;
 
-public class ReadDebtPreviousAmountHandler(ApplicationDbContext context) : IRequestHandler<ReadDebtPreviousAmount, Persistence.Entities.Debt.PreviousAmount>
+public class ReadDebtPreviousAmountHandler(ApplicationDbContext context) : IRequestHandler<ReadDebtPreviousAmount, List<Persistence.Entities.Debt.PreviousAmount>>
 {
-    public async Task<Persistence.Entities.Debt.PreviousAmount> Handle(ReadDebtPreviousAmount request, CancellationToken cancellationToken)
+    public async Task<List<Persistence.Entities.Debt.PreviousAmount>> Handle(ReadDebtPreviousAmount request, CancellationToken cancellationToken)
     {
-        var debt = await context.DebtPreviousAmounts.FindAsync([request.Id], cancellationToken);
-        return debt;
+        var previousAmounts = await context.DebtPreviousAmounts.Where(x => x.DebtId == request.Id).ToListAsync(cancellationToken);
+        return previousAmounts;
     }
 }

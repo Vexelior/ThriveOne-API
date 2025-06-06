@@ -17,10 +17,6 @@ public class DebtHistoryController(IMediator mediator) : ControllerBase
         try
         {
             var result = await mediator.Send(new Application.Features.Debt.Read.History.ReadDebtHistories());
-            if (result == null || !result.Any())
-            {
-                return NotFound("Debt history not found.");
-            }
             return Ok(result);
         }
         catch (Exception ex)
@@ -35,10 +31,6 @@ public class DebtHistoryController(IMediator mediator) : ControllerBase
         try
         {
             var result = await mediator.Send(new Application.Features.Debt.Read.History.ReadDebtHistory(id));
-            if (result == null)
-            {
-                return NotFound("Debt history not found.");
-            }
             return Ok(result);
         }
         catch (Exception ex)
@@ -53,10 +45,6 @@ public class DebtHistoryController(IMediator mediator) : ControllerBase
         try
         {
             var result = await mediator.Send(command);
-            if (result == null)
-            {
-                return NotFound("Failed to create debt history.");
-            }
             return Ok(result);
         }
         catch (Exception ex)
@@ -75,10 +63,6 @@ public class DebtHistoryController(IMediator mediator) : ControllerBase
         try
         {
             var result = await mediator.Send(command);
-            if (result == null)
-            {
-                return NotFound("Failed to update debt history.");
-            }
             return Ok(result);
         }
         catch (Exception ex)
@@ -93,10 +77,6 @@ public class DebtHistoryController(IMediator mediator) : ControllerBase
         try
         {
             var result = await mediator.Send(new DeleteDebtHistory(id));
-            if (result == null)
-            {
-                return NotFound("Failed to delete debt history.");
-            }
             return Ok(result);
         }
         catch (Exception ex)

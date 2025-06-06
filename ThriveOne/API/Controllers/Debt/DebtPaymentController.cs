@@ -18,10 +18,6 @@ public class DebtPaymentController(IMediator mediator) : ControllerBase
         try
         {
             var result = await mediator.Send(new ReadDebtPayments());
-            if (result == null || !result.Any())
-            {
-                return NotFound("No debt payments found.");
-            }
             return Ok(result);
         }
         catch (Exception ex)
@@ -36,10 +32,6 @@ public class DebtPaymentController(IMediator mediator) : ControllerBase
         try
         {
             var result = await mediator.Send(new ReadDebtPayment(id));
-            if (result == null)
-            {
-                return NotFound("No debt payments found.");
-            }
             return Ok(result);
         }
         catch (Exception ex)
@@ -54,10 +46,6 @@ public class DebtPaymentController(IMediator mediator) : ControllerBase
         try
         {
             var result = await mediator.Send(command);
-            if (result == null)
-            {
-                return NotFound("Failed to create debt payment.");
-            }
             return Ok(result);
         }
         catch (Exception ex)
@@ -76,10 +64,6 @@ public class DebtPaymentController(IMediator mediator) : ControllerBase
                 return BadRequest("ID in the URL does not match the ID in the request body.");
             }
             var result = await mediator.Send(command);
-            if (result == null)
-            {
-                return NotFound("Failed to update debt payment.");
-            }
             return Ok(result);
         }
         catch (Exception ex)
@@ -94,10 +78,6 @@ public class DebtPaymentController(IMediator mediator) : ControllerBase
         try
         {
             var result = await mediator.Send(new DeleteDebtPayment(id));
-            if (result == null)
-            {
-                return NotFound("Failed to delete debt payment.");
-            }
             return Ok(result);
         }
         catch (Exception ex)

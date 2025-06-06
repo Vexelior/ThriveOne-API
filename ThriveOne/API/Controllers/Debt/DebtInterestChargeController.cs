@@ -18,10 +18,6 @@ public class DebtInterestChargeController(IMediator mediator) : ControllerBase
         try
         {
             var result = await mediator.Send(new ReadDebtInterestCharges());
-            if (result == null || !result.Any())
-            {
-                return NotFound("No debt interest charges found.");
-            }
             return Ok(result);
         }
         catch (Exception ex)
@@ -36,10 +32,6 @@ public class DebtInterestChargeController(IMediator mediator) : ControllerBase
         try
         {
             var result = await mediator.Send(new ReadDebtInterestCharge(id));
-            if (result == null)
-            {
-                return NotFound($"Debt interest charge with ID {id} not found.");
-            }
             return Ok(result);
         }
         catch (Exception ex)
@@ -54,12 +46,6 @@ public class DebtInterestChargeController(IMediator mediator) : ControllerBase
         try
         {
             var result = await mediator.Send(command);
-
-            if (result == null)
-            {
-                return NotFound("Failed to create debt.");
-            }
-
             return Ok(result);
         }
         catch (Exception ex)
@@ -78,10 +64,6 @@ public class DebtInterestChargeController(IMediator mediator) : ControllerBase
                 return BadRequest("ID in the URL does not match ID in the body.");
             }
             var result = await mediator.Send(command);
-            if (result == null)
-            {
-                return NotFound($"Debt interest charge with ID {id} not found.");
-            }
             return Ok(result);
         }
         catch (Exception ex)
@@ -96,10 +78,6 @@ public class DebtInterestChargeController(IMediator mediator) : ControllerBase
         try
         {
             var result = await mediator.Send(new DeleteDebtInterestCharge(id));
-            if (result == null)
-            {
-                return NotFound($"Debt interest charge with ID {id} not found.");
-            }
             return Ok(result);
         }
         catch (Exception ex)

@@ -18,10 +18,6 @@ public class DebtController(IMediator mediator) : ControllerBase
         try
         {
             var result = await mediator.Send(new ReadDebts());
-            if (result == null || !result.Any())
-            {
-                return NotFound("No debts found.");
-            }
             return Ok(result);
         }
         catch (Exception ex)
@@ -36,10 +32,6 @@ public class DebtController(IMediator mediator) : ControllerBase
         try
         {
             var result = await mediator.Send(new ReadDebt(id));
-            if (result == null)
-            {
-                return NotFound($"Debt with ID {id} not found.");
-            }
             return Ok(result);
         }
         catch (Exception ex)
@@ -53,13 +45,10 @@ public class DebtController(IMediator mediator) : ControllerBase
     {
         try
         {
+            command.DateAdded = DateTime.Now;
+            command.DateEdited = DateTime.Now;
+            command.LastPaymentDate = DateTime.Now;
             var result = await mediator.Send(command);
-
-            if (result == null)
-            {
-                return NotFound("Failed to create debt.");
-            }
-
             return Ok(result);
         }
         catch (Exception ex)
@@ -78,10 +67,6 @@ public class DebtController(IMediator mediator) : ControllerBase
                 return BadRequest("Debt ID mismatch.");
             }
             var result = await mediator.Send(command);
-            if (result == null)
-            {
-                return NotFound($"Debt with ID {id} not found.");
-            }
             return Ok(result);
         }
         catch (Exception ex)
@@ -96,10 +81,6 @@ public class DebtController(IMediator mediator) : ControllerBase
         try
         {
             var result = await mediator.Send(new DeleteDebt(id));
-            if (result == null)
-            {
-                return NotFound($"Debt with ID {id} not found.");
-            }
             return Ok(result);
         }
         catch (Exception ex)

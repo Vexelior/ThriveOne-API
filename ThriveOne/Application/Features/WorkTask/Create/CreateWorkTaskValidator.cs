@@ -22,16 +22,12 @@ public class CreateWorkTaskValidator : AbstractValidator<CreateWorkTask>
 
         RuleFor(x => x.Status).NotEmpty()
                                         .WithMessage("Status is required.")
-                                        .WithMessage("Status must be one of the following: NotStarted, InProgress, Completed.");
+                                        .WithMessage("Status must be one of the following: Not Started, In Progress, Completed.");
 
         RuleFor(x => x.Markdown).NotEmpty()
-                                        .WithMessage("Markdown is required.")
-                                        .MaximumLength(5000)
-                                        .WithMessage("Markdown must not exceed 5000 characters.");
+                                            .WithMessage("Markdown is required.");
 
         RuleFor(x => x.HTML).NotEmpty()
-                                        .WithMessage("HTML is required.")
-                                        .MaximumLength(5000)
-                                        .WithMessage("HTML must not exceed 5000 characters.");
+                                        .WithMessage("HTML is required.");
     }
 }

@@ -25,6 +25,24 @@ public class CreateDebtInterestChargeHandler(ApplicationDbContext context) : IRe
             Date = request.Date,
             Description = request.Description
         };
+        var debt = await context.Debts.FindAsync([request.DebtId], cancellationToken);
+        if (debt == null)
+        {
+            throw new KeyNotFoundException($"Debt with ID {request.DebtId} not found.");
+        }
+        debt.PreviousAmount = debt.RemainingAmount;
+        debt.RemainingAmount += request.Amount;
+        debt.PercentageChange = ((debt.RemainingAmount - debt.PreviousAmount) / debt.PreviousAmount) * 100;
+        debt.DateEdited = DateTime.Now;
+        context.DebtPreviousAmounts.Add(new Persistence.Entities.Debt.PreviousAmount
+        {
+            Amount = debt.PreviousAmount,
+            PercentageChange = debt.PercentageChange,
+            DebtId = request.DebtId,
+            Description = "Interest Charge",
+            DateAdded = DateTime.Now
+        });
+        context.Debts.Update(debt);
         context.DebtInterestCharges.Add(debtInterestCharge);
         await context.SaveChangesAsync(cancellationToken);
         return debtInterestCharge;

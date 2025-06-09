@@ -22,6 +22,28 @@ public class CreateDebtPaymentHandler(ApplicationDbContext context) : IRequestHa
             Amount = request.Amount,
             Date = request.Date
         };
+        var debt = await context.Debts.FindAsync([request.DebtId], cancellationToken);
+        if (debt == null)
+        {
+            throw new KeyNotFoundException($"Debt with ID {request.DebtId} not found.");
+        }
+
+        debt.PreviousAmount = debt.RemainingAmount;
+        debt.RemainingAmount -= request.Amount;
+        debt.LastPayment = request.Amount;
+        debt.LastPaymentDate = request.Date;
+        debt.DateEdited = DateTime.Now;
+        debt.PercentageChange = ((debt.RemainingAmount - debt.PreviousAmount) / debt.PreviousAmount) * 100;
+
+        context.DebtPreviousAmounts.Add(new Persistence.Entities.Debt.PreviousAmount
+        {
+            Amount = debt.PreviousAmount,
+            PercentageChange = debt.PercentageChange,
+            DebtId = request.DebtId,
+            Description = "Payment",
+            DateAdded = DateTime.Now
+        });
+        context.Debts.Update(debt);
         context.DebtPayments.Add(debtPayment);
         await context.SaveChangesAsync(cancellationToken);
         return debtPayment;

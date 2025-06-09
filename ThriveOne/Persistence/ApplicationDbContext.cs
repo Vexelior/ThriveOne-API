@@ -10,7 +10,6 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
 {
     public DbSet<Debt> Debts { get; set; }
     public DbSet<PreviousAmount> DebtPreviousAmounts { get; set; }
-    public DbSet<History> DebtHistories { get; set; }
     public DbSet<Payment> DebtPayments { get; set; }
     public DbSet<PreviousPercentage> DebtPreviousPercentages { get; set; }
     public DbSet<InterestCharge> DebtInterestCharges { get; set; }

@@ -20,11 +20,6 @@ public class CreateTodoValidator : AbstractValidator<CreateTodo>
                                         .WithMessage("Created date is required.")
                                         .Must(BeAValidDate)
                                         .WithMessage("Created date must be a valid date.");
-
-        RuleFor(x => x.IsCompleted).NotEmpty()
-                                            .WithMessage("IsCompleted is required.")
-                                            .Must(x => x || !x)
-                                            .WithMessage("IsCompleted must be true or false.");
     }
 
     private static bool BeAValidDate(DateTime date)

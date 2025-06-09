@@ -15,11 +15,5 @@ public class UpdateTodoValidator : AbstractValidator<UpdateTodo>
                                             .WithMessage("Description is required.")
                                             .MaximumLength(500)
                                             .WithMessage("Description must not exceed 500 characters.");
-
-
-        RuleFor(x => x.IsCompleted).NotEmpty()
-                                            .WithMessage("IsCompleted is required.")
-                                            .Must(x => x || !x)
-                                            .WithMessage("IsCompleted must be true or false.");
     }
 }

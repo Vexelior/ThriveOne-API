@@ -11,10 +11,12 @@ public class CreateDebtPaymentHandler(ApplicationDbContext context) : IRequestHa
     {
         CreateDebtPaymentValidator validator = new CreateDebtPaymentValidator();
         ValidationResult validationResult = await validator.ValidateAsync(request, cancellationToken);
+
         if (!validationResult.IsValid)
         {
             throw new ValidationException(validationResult.Errors);
         }
+
         var debtPayment = new Persistence.Entities.Debt.Payment
         {
             Id = Guid.NewGuid(),
@@ -22,11 +24,19 @@ public class CreateDebtPaymentHandler(ApplicationDbContext context) : IRequestHa
             Amount = request.Amount,
             Date = request.Date
         };
+
         var debt = await context.Debts.FindAsync([request.DebtId], cancellationToken);
         if (debt == null)
         {
             throw new KeyNotFoundException($"Debt with ID {request.DebtId} not found.");
         }
+
+        context.DebtPreviousPercentages.Add(new Persistence.Entities.Debt.PreviousPercentage
+        {
+            Percent = debt.PercentageChange,
+            DebtId = request.DebtId,
+            Date = DateTime.Now
+        });
 
         debt.PreviousAmount = debt.RemainingAmount;
         debt.RemainingAmount -= request.Amount;
@@ -43,6 +53,7 @@ public class CreateDebtPaymentHandler(ApplicationDbContext context) : IRequestHa
             Description = "Payment",
             DateAdded = DateTime.Now
         });
+
         context.Debts.Update(debt);
         context.DebtPayments.Add(debtPayment);
         await context.SaveChangesAsync(cancellationToken);

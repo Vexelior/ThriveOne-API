@@ -22,7 +22,7 @@ public class CreateTodoHandler(ApplicationDbContext context) : IRequestHandler<C
             Id = Guid.NewGuid(),
             Title = request.Title,
             Description = request.Description,
-            Created = request.Created,
+            Created = DateTime.Now.Date,
             Completed = request.Completed,
             Due = request.Due,
             IsCompleted = false

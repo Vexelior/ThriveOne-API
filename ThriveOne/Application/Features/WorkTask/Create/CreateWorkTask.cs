@@ -12,4 +12,5 @@ public class CreateWorkTask : IRequest<Persistence.Entities.WorkTask.WorkTask>
     public string Status { get; set; }
     public string Markdown { get; set; }
     public string HTML { get; set; }
+    public bool IsCompleted { get; set; }
 }

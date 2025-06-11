@@ -11,4 +11,5 @@ public class WorkTask
     public string Status { get; set; }
     public string Markdown { get; set; }
     public string HTML { get; set; }
+    public bool IsCompleted { get; set; }
 }

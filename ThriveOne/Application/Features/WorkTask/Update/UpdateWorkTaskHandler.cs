@@ -30,6 +30,7 @@ public class UpdateWorkTaskHandler(ApplicationDbContext context) : IRequestHandl
         workTask.Status = request.Status;
         workTask.Markdown = request.Markdown;
         workTask.HTML = request.HTML;
+        workTask.IsCompleted = request.IsCompleted;
         await context.SaveChangesAsync(cancellationToken);
         return workTask;
     }

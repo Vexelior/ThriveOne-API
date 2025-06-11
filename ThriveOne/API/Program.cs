@@ -50,8 +50,9 @@ builder.Services.AddCors(options =>
         builder =>
         {
             builder.WithOrigins("http://192.168.0.198:4500")
-                .AllowAnyMethod()
-                .AllowAnyHeader();
+                   .WithOrigins("http://localhost:5173")
+                   .AllowAnyMethod()
+                   .AllowAnyHeader();
         });
 });
 

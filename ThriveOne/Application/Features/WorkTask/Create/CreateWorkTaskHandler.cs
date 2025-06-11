@@ -26,7 +26,8 @@ public class CreateWorkTaskHandler(ApplicationDbContext context) : IRequestHandl
             Priority = request.Priority,
             Status = request.Status,
             Markdown = request.Markdown,
-            HTML = request.HTML
+            HTML = request.HTML,
+            IsCompleted = request.IsCompleted
         };
 
         context.WorkTasks.Add(workTask);

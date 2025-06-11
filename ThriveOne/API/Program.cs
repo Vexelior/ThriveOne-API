@@ -46,12 +46,12 @@ builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBeh
 //CORS
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAllOrigins",
+    options.AddPolicy("AllowFrontend",
         builder =>
         {
-            builder.AllowAnyOrigin()
-                   .AllowAnyMethod()
-                   .AllowAnyHeader();
+            builder.WithOrigins("http://192.168.0.198:4500")
+                .AllowAnyMethod()
+                .AllowAnyHeader();
         });
 });
 

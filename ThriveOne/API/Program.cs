@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Application.Common.Behaviors;
 using Application.Features.Todo.Read;
+using OpenTelemetry.Metrics;
 using Prometheus;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -56,6 +57,13 @@ builder.Services.AddCors(options =>
                    .AllowAnyHeader();
         });
 });
+
+builder.Services.AddOpenTelemetry()
+    .WithMetrics(builder =>
+    {
+        builder.AddPrometheusExporter();
+        builder.AddMeter("Microsoft.AspNetCore.Hosting", "Microsoft.AspNetCore.Server.Kestrel");
+    });
 
 var app = builder.Build();
 

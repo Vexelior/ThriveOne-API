@@ -61,6 +61,8 @@ builder.Services.AddCors(options =>
 builder.Services.AddOpenTelemetry()
     .WithMetrics(builder =>
     {
+        builder.AddAspNetCoreInstrumentation();
+        builder.AddRuntimeInstrumentation();
         builder.AddPrometheusExporter();
         builder.AddMeter("Microsoft.AspNetCore.Hosting", "Microsoft.AspNetCore.Server.Kestrel");
     });
@@ -78,16 +80,12 @@ app.UseCors("AllowFrontend");
 
 app.UseRouting();
 
+app.MapPrometheusScrapingEndpoint();
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
 app.MapControllers();
-
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapControllers();
-    endpoints.MapMetrics();
-});
 
 await app.RunAsync();

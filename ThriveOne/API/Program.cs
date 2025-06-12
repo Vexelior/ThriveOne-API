@@ -90,6 +90,12 @@ app.UseRouting();
 
 app.Use(async (context, next) =>
 {
+    if (context.Request.Path.StartsWithSegments("/metrics"))
+    {
+        await next();
+        return;
+    }
+
     var ipAddress = context.Connection.RemoteIpAddress?.ToString();
     var requestPath = context.Request.Path;
     var requestMethod = context.Request.Method;

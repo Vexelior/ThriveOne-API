@@ -1,3 +1,4 @@
+using System.Text;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
@@ -7,7 +8,15 @@ using Microsoft.AspNetCore.Mvc.Versioning;
 using Application.Common.Behaviors;
 using Application.Features.Todo.Read;
 using OpenTelemetry.Metrics;
-using Prometheus;
+using Serilog;
+
+const string path = "C:/Logs/ThriveOne/log-.log";
+
+Log.Logger = new LoggerConfiguration()
+    .WriteTo.Console()
+    .WriteTo.File(path, rollingInterval: RollingInterval.Day)
+    .Enrich.FromLogContext()
+    .CreateLogger();
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -51,8 +60,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowFrontend",
         builder =>
         {
-            builder.WithOrigins("http://192.168.0.198:4500")
-                   .WithOrigins("http://localhost:5173")
+            builder.WithOrigins("http://192.168.0.198:4500", "http://localhost:5173")
                    .AllowAnyMethod()
                    .AllowAnyHeader();
         });
@@ -80,6 +88,43 @@ app.UseCors("AllowFrontend");
 
 app.UseRouting();
 
+app.Use(async (context, next) =>
+{
+    var ipAddress = context.Connection.RemoteIpAddress?.ToString();
+    var requestPath = context.Request.Path;
+    var requestMethod = context.Request.Method;
+    string requestBody = string.Empty;
+
+    if (context.Request.ContentLength > 0)
+    {
+        context.Request.EnableBuffering();
+        using var reader = new StreamReader(
+            context.Request.Body,
+            encoding: Encoding.UTF8,
+            detectEncodingFromByteOrderMarks: false,
+            leaveOpen: true);
+        requestBody = await reader.ReadToEndAsync();
+        context.Request.Body.Position = 0;
+    }
+
+    var originalBodyStream = context.Response.Body;
+    using var responseBody = new MemoryStream();
+    context.Response.Body = responseBody;
+
+    await next();
+
+    context.Response.Body.Seek(0, SeekOrigin.Begin);
+    string responseBodyText = await new StreamReader(context.Response.Body).ReadToEndAsync();
+    context.Response.Body.Seek(0, SeekOrigin.Begin);
+
+    Log.Information("Request from IP: {IP}, Method: {Method}, Path: {Path}, Body: {Body}", ipAddress, requestMethod, requestPath, requestBody);
+    Log.Information("Response for IP: {IP}, Method: {Method}, Path: {Path}, StatusCode: {StatusCode}, Body: {Body}",
+        ipAddress, requestMethod, requestPath, context.Response.StatusCode, responseBodyText);
+
+    await responseBody.CopyToAsync(originalBodyStream);
+    context.Response.Body = originalBodyStream;
+});
+
 app.MapPrometheusScrapingEndpoint();
 
 app.UseHttpsRedirection();
@@ -88,4 +133,16 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-await app.RunAsync();
+try
+{
+    Log.Information("Starting up...");
+    await app.RunAsync();
+}
+catch (Exception ex)
+{
+    Log.Fatal(ex, "Application start-up failed...");
+}
+finally
+{
+    Log.CloseAndFlush();
+}

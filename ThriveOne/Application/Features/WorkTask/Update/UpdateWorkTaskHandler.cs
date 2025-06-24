@@ -28,7 +28,6 @@ public class UpdateWorkTaskHandler(ApplicationDbContext context) : IRequestHandl
         workTask.DueDate = request.DueDate;
         workTask.Priority = request.Priority;
         workTask.Status = request.Status;
-        workTask.Markdown = request.Markdown;
         workTask.HTML = request.HTML;
         workTask.IsCompleted = request.IsCompleted;
         await context.SaveChangesAsync(cancellationToken);

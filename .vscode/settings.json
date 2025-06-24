@@ -1,0 +1,6 @@
+{
+  "sonarlint.connectedMode.project": {
+    "connectionId": "vexelior",
+    "projectKey": "Vexelior_ThriveOne-API"
+  }
+}

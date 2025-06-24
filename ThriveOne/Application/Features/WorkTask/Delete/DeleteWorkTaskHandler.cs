@@ -8,7 +8,12 @@ public class DeleteWorkTaskHandler(ApplicationDbContext context) : IRequestHandl
     public async Task<Persistence.Entities.WorkTask.WorkTask> Handle(DeleteWorkTask request, CancellationToken cancellationToken)
     {
         var workTask = await context.WorkTasks.FindAsync([request.Id], cancellationToken);
-        context.WorkTasks.Remove(workTask);
+        if (workTask == null)
+        {
+            throw new KeyNotFoundException($"WorkTask with ID {request.Id} not found.");
+        }
+        workTask.IsDeleted = true;
+        context.WorkTasks.Update(workTask);
         await context.SaveChangesAsync(cancellationToken);
         return workTask;
     }

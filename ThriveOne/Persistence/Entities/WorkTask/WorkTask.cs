@@ -12,4 +12,5 @@ public class WorkTask
     public string Markdown { get; set; }
     public string HTML { get; set; }
     public bool IsCompleted { get; set; }
+    public bool IsDeleted { get; set; }
 }

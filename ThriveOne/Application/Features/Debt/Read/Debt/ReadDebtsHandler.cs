@@ -8,7 +8,7 @@ public class ReadDebtsHandler(ApplicationDbContext context) : IRequestHandler<Re
 {
     public async Task<List<Persistence.Entities.Debt.Debt>> Handle(ReadDebts request, CancellationToken cancellationToken)
     {
-        var debts = await context.Debts.ToListAsync(cancellationToken: cancellationToken);
+        var debts = await context.Debts.OrderByDescending(x => x.RemainingAmount).ToListAsync(cancellationToken: cancellationToken);
         return debts;
     }
 }

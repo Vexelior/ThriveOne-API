@@ -7,7 +7,7 @@ public class ReadWorkTasksHandler(ApplicationDbContext context) : IRequestHandle
 {
     public async Task<List<Persistence.Entities.WorkTask.WorkTask>> Handle(ReadWorkTasks request, CancellationToken cancellationToken)
     {
-        var workTasks = context.WorkTasks.ToList();
+        var workTasks = context.WorkTasks.Where(x => !x.IsDeleted).ToList();
         return workTasks;
     }
 }

@@ -10,4 +10,5 @@ public class CreateTodo : IRequest<Persistence.Entities.Todo.Todo>
     public DateTime? Completed { get; set; } = null;
     public DateTime? Due { get; set; } = null;
     public bool IsCompleted { get; set; } = false;
+    public string? TimeOfDay { get; set; } = null;
 }

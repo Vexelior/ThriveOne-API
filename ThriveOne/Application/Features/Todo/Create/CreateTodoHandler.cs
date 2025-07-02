@@ -25,7 +25,8 @@ public class CreateTodoHandler(ApplicationDbContext context) : IRequestHandler<C
             Created = DateTime.Now.Date,
             Completed = request.Completed,
             Due = request.Due,
-            IsCompleted = false
+            IsCompleted = false,
+            TimeOfDay = request.TimeOfDay ?? string.Empty
         };
 
         context.Todos.Add(todo);

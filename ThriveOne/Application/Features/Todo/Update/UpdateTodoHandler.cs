@@ -27,7 +27,7 @@ public class UpdateTodoHandler(ApplicationDbContext context) : IRequestHandler<U
         todo.Completed = request.Completed ?? todo.Completed;
         todo.Due = request.Due ?? todo.Due;
         todo.IsCompleted = request.IsCompleted;
-        todo.TimeOfDay = request.TimeOfDay;
+        todo.TimeOfDay = request.TimeOfDay ?? string.Empty;
         await context.SaveChangesAsync(cancellationToken);
         return todo;
     }

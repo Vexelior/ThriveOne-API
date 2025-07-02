@@ -11,5 +11,5 @@ public class UpdateTodo(Guid id, string title, string description, DateTime? cre
     public DateTime? Completed { get; set; } = completed;
     public DateTime? Due { get; set; } = due;
     public bool IsCompleted { get; set; } = isCompleted;
-    public string TimeOfDay { get; set; } = timeOfDay;
+    public string? TimeOfDay { get; set; } = timeOfDay;
 }

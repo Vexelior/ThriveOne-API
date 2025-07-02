@@ -9,5 +9,5 @@ public class Todo
     public DateTime? Completed { get; set; }
     public DateTime? Due { get; set; }
     public bool IsCompleted { get; set; }
-    public string TimeOfDay { get; set; }
+    public string? TimeOfDay { get; set; }
 }

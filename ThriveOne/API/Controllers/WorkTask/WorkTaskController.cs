@@ -15,59 +15,69 @@ public class WorkTaskController(IMediator mediator) : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
-        var result = await mediator.Send(new ReadWorkTasks());
-        if (result == null || !result.Any())
+        try
         {
-            return NotFound("No work tasks found.");
+            return Ok(await mediator.Send(new ReadWorkTasks()));
         }
-        return Ok(result);
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"{ex.Message}");
+        }
     }
 
     [HttpGet("{id:guid}")]
     public async Task<IActionResult> GetById(Guid id)
     {
-        var result = await mediator.Send(new ReadWorkTask(id));
-        if (result == null)
+        try
         {
-            return NotFound($"Work task with ID {id} not found.");
+            return Ok(await mediator.Send(new ReadWorkTask(id)));
         }
-        return Ok(result);
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"{ex.Message}");
+        }
     }
 
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] CreateWorkTask createWorkTask)
     {
-        var result = await mediator.Send(createWorkTask);
-        if (result == null)
+        try
         {
-            return BadRequest("Failed to create work task.");
+            return Ok(await mediator.Send(createWorkTask));
         }
-        return Ok(result);
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"{ex.Message}");
+        }
     }
 
     [HttpPut("{id:guid}")]
     public async Task<IActionResult> Update(Guid id, [FromBody] UpdateWorkTask updateWorkTask)
     {
-        if (id != updateWorkTask.Id)
+        try
         {
-            return BadRequest("ID in the URL does not match ID in the request body.");
+            if (id != updateWorkTask.Id)
+            {
+                return BadRequest("ID in the URL does not match ID in the request body.");
+            }
+            return Ok(await mediator.Send(updateWorkTask));
         }
-        var result = await mediator.Send(updateWorkTask);
-        if (result == null)
+        catch (Exception ex)
         {
-            return NotFound($"Work task with ID {id} not found.");
+            return StatusCode(500, $"{ex.Message}");
         }
-        return Ok(result);
     }
 
     [HttpDelete("{id:guid}")]
     public async Task<IActionResult> Delete(Guid id)
     {
-        var result = await mediator.Send(new DeleteWorkTask(id));
-        if (result == null)
+        try
         {
-            return NotFound($"Work task with ID {id} not found.");
+            return Ok(await mediator.Send(new DeleteWorkTask(id)));
         }
-        return Ok(result);
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"{ex.Message}");
+        }
     }
 }

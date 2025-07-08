@@ -17,17 +17,11 @@ public class TodoController(IMediator mediator) : ControllerBase
     {
         try
         {
-            var result = await mediator.Send(new ReadTodos());
-            if (result == null)
-            {
-                return NotFound("No todos found.");
-            }
-
-            return Ok(result);
+            return Ok(await mediator.Send(new ReadTodos()));
         }
         catch (Exception ex)
         {
-            return BadRequest(ex.Message);
+            return StatusCode(500, $"{ex.Message}");
         }
     }
 
@@ -37,18 +31,11 @@ public class TodoController(IMediator mediator) : ControllerBase
     {
         try
         {
-            var result = await mediator.Send(new ReadTodo(id));
-
-            if (result == null)
-            {
-                return NotFound($"Todo with ID {id} not found.");
-            }
-
-            return Ok(result);
+            return Ok(await mediator.Send(new ReadTodo(id)));
         }
         catch (Exception ex)
         {
-            return BadRequest(ex.Message);
+            return StatusCode(500, $"{ex.Message}");
         }
     }
 
@@ -57,18 +44,11 @@ public class TodoController(IMediator mediator) : ControllerBase
     {
         try
         {
-            var result = await mediator.Send(command);
-
-            if (result == null)
-            {
-                return BadRequest("Failed to create todo.");
-            }
-
-            return Ok(result);
+            return Ok(await mediator.Send(command));
         }
         catch (Exception ex)
         {
-            return BadRequest(ex.Message);
+            return StatusCode(500, $"{ex.Message}");
         }
     }
 
@@ -81,18 +61,11 @@ public class TodoController(IMediator mediator) : ControllerBase
             {
                 return BadRequest("Todo Id mismatch.");
             }
-
-            var result = await mediator.Send(command);
-            if (result == null)
-            {
-                return NotFound($"Todo with ID {id} not found.");
-            }
-
-            return Ok(result);
+            return Ok(await mediator.Send(command));
         }
         catch (Exception ex)
         {
-            return BadRequest(ex.Message);
+            return StatusCode(500, $"{ex.Message}");
         }
     }
 
@@ -101,17 +74,11 @@ public class TodoController(IMediator mediator) : ControllerBase
     {
         try
         {
-            var result = await mediator.Send(new DeleteTodo(id));
-            if (result == null)
-            {
-                return NotFound($"Todo with ID {id} not found.");
-            }
-
-            return Ok(result);
+            return Ok(await mediator.Send(new DeleteTodo(id)));
         }
         catch (Exception ex)
         {
-            return BadRequest(ex.Message);
+            return StatusCode(500, $"{ex.Message}");
         }
     }
 }

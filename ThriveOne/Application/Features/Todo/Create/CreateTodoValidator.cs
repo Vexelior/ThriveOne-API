@@ -7,9 +7,7 @@ public class CreateTodoValidator : AbstractValidator<CreateTodo>
     public CreateTodoValidator()
     {
         RuleFor(x => x.Title).NotEmpty()
-                                      .WithMessage("Title is required.")
-                                      .MaximumLength(100)
-                                      .WithMessage("Title must not exceed 100 characters.");
+                                      .WithMessage("Title is required.");
 
         RuleFor(x => x.Created).NotEmpty()
                                         .WithMessage("Created date is required.")

@@ -7,22 +7,16 @@ public class CreateWorkTaskValidator : AbstractValidator<CreateWorkTask>
     public CreateWorkTaskValidator()
     {
         RuleFor(x => x.Title).NotEmpty()
-                                      .WithMessage("Title is required.")
-                                      .MaximumLength(100)
-                                      .WithMessage("Title must not exceed 100 characters.");
+                                         .WithMessage("Title is required.");
 
         RuleFor(x => x.Description).NotEmpty()
-                                            .WithMessage("Description is required.")
-                                            .MaximumLength(500)
-                                            .WithMessage("Description must not exceed 500 characters.");
+                                               .WithMessage("Description is required.");
 
         RuleFor(x => x.Priority).NotEmpty()
-                                        .WithMessage("Priority is required.")
-                                        .WithMessage("Priority must be one of the following: Low, Medium, High.");
+                                            .WithMessage("Priority is required.");
 
         RuleFor(x => x.Status).NotEmpty()
-                                        .WithMessage("Status is required.")
-                                        .WithMessage("Status must be one of the following: Not Started, In Progress, Completed.");
+                                          .WithMessage("Status is required.");
 
         RuleFor(x => x.Markdown).NotEmpty()
                                             .WithMessage("Markdown is required.");
